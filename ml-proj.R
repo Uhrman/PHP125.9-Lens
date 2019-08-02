@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ###########################################################
 #
 ###########################################################
@@ -8,11 +7,6 @@
 ###########################################################
 # Create and save edx set, validation set
 ###########################################################
-=======
-###########################################
-# Create and save edx set, validation set
-###########################################
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 
 # Note: this process could take a couple of minutes
 
@@ -59,14 +53,7 @@ edx <- rbind(edx, removed)
 
 # Delete temporary objects
 
-<<<<<<< HEAD
 unlink(dl)
-rm(dl, ratings, movies, test_index, temp, movielens, removed)
-
-=======
-dl
-unlink(dl)
-
 rm(dl, ratings, movies, test_index, temp, movielens, removed)
 
 ###########################################################
@@ -77,7 +64,6 @@ RMSE <- function(true_ratings, predicted_ratings){
   sqrt(mean((true_ratings - predicted_ratings)^2))
 }
 
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 # Check dataset variables
 
 edx %>% 
@@ -138,28 +124,22 @@ predicted_ratings <- mu + validation %>%
   left_join(movie_avgs, by='movieId') %>%
   pull(b_i)
 
-<<<<<<< HEAD
 # Calculate RSME
 
 model_1_rmse <- RMSE(predicted_ratings, validation$rating)
 
 # Add new result to the results table
 
-=======
 model_1_rmse <- RMSE(predicted_ratings, validation$rating)
 
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 rmse_results <- bind_rows(rmse_results,
                           tibble(method="Movie Effect Model",  
                                  RMSE = round(model_1_rmse, 6)
                                  )
                           )
-<<<<<<< HEAD
 
 # Show intermediate results
 
-=======
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 rmse_results %>% knitr::kable() 
 
 ###########################################################
@@ -184,23 +164,19 @@ predicted_ratings <- validation %>%
   mutate(pred = mu + b_i + b_u) %>%
   pull(pred)
 
-<<<<<<< HEAD
 # Calculate RSME
 
 model_2_rmse <- RMSE(predicted_ratings, validation$rating)
 
 # Add new result to the results table
 
-=======
 model_2_rmse <- RMSE(predicted_ratings, validation$rating)
 
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 rmse_results <- bind_rows(rmse_results,
                           tibble(method="Movie + User Effects Model",  
                                  RMSE = round(model_2_rmse,6)
                                  )
                           )
-<<<<<<< HEAD
 
 # Show intermediate results
 
@@ -208,15 +184,9 @@ rmse_results %>% knitr::kable()
 
 #############################################################
 # RSME: model 3 - Regularization Movie Effect 
-=======
-rmse_results %>% knitr::kable()
-
-#############################################################
-## RSME: model 3 - Regularization Movie Effect 
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 #############################################################
 
-# ???? Penalized Least Squares
+# Penalized Least Squares
 
 lambdas <- seq(0, 10, 0.25)
 mu <- mean(edx$rating)
@@ -225,11 +195,8 @@ movie_reg_avgs <- edx %>%
   group_by(movieId) %>% 
   summarize(b_i = sum(rating - mu)/(n() + lambda), n_i = n()) 
 
-<<<<<<< HEAD
 # Calculate RSMEs
 
-=======
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 rmses <- sapply(lambdas, function(l){
   predicted_ratings <- 
     validation %>% 
@@ -239,7 +206,6 @@ rmses <- sapply(lambdas, function(l){
   return(RMSE(predicted_ratings, validation$rating))
 })
 
-<<<<<<< HEAD
 # Calculate RSMEs and show results and best lambda
 
 qplot(lambdas, rmses)  
@@ -247,22 +213,14 @@ lambdas[which.min(rmses)]
 
 # Add new result to the results table
 
-=======
-qplot(lambdas, rmses)  
-lambdas[which.min(rmses)]
-
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 rmse_results <- bind_rows(rmse_results,
                           tibble(method="Regularized Movie Effect Model",  
                                  RMSE = round(min(rmses), 6)
                                  )
                           )
-<<<<<<< HEAD
 
 # Show intermediate results
 
-=======
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 rmse_results %>% knitr::kable()
 
 #############################################################
@@ -271,30 +229,6 @@ rmse_results %>% knitr::kable()
 
 # Choosing the penalty terms
 
-<<<<<<< HEAD
-=======
-#lambdas <- seq(0, 10, 0.25)
-#mu <- mean(edx$rating)
-
-# ????
-#just_the_sum <- edx %>% 
-#  group_by(movieId) %>% 
-#  summarize(s = sum(rating - mu), n_i = n())
-
-#rmses <- sapply(lambdas, function(l){
-#  predicted_ratings <- 
-#    validation %>% 
-#    left_join(just_the_sum, by='movieId') %>% 
-#    mutate(b_i = s/(n_i+l)) %>%
-#    mutate(pred = mu + b_i) %>%
-#    pull(pred)
-#  return(RMSE(predicted_ratings, validation$rating))
-#})
-
-#qplot(lambdas, rmses)  
-#lambdas[which.min(rmses)]
-
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 lambdas <- seq(0, 10, 0.25)
 rmses <- sapply(lambdas, function(l){
   
@@ -319,7 +253,6 @@ rmses <- sapply(lambdas, function(l){
   return(RMSE(predicted_ratings, validation$rating))
 })
 
-<<<<<<< HEAD
 # Calculate RSMEs and show results and best lambda
 
 qplot(lambdas, rmses)  
@@ -327,22 +260,14 @@ lambdas[which.min(rmses)]
 
 # Add new result to the results table
 
-=======
-qplot(lambdas, rmses)  
-lambdas[which.min(rmses)]
-
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 rmse_results <- bind_rows(rmse_results, 
                           tibble(method="Regularized Movie + User Effect Model", 
                                  RMSE = round(min(rmses), 6)
                                  )
                           )
-<<<<<<< HEAD
 
 #############################################################
 # Final result
 #############################################################
 
-=======
->>>>>>> 4ea7b398cd70c60c417e558a0515cfd0f65d56a8
 rmse_results %>% knitr::kable()
